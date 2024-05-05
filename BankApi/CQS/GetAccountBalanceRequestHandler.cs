@@ -1,5 +1,4 @@
-﻿using BankApi.Interfaces;
-using BankApi.Models;
+﻿using BankApi.Services;
 
 using MediatR;
 
@@ -8,7 +7,7 @@ namespace BankApi.CQS;
 public class GetAccountBalanceRequestHandler : IRequestHandler<GetAccountBalanceRequest, AccountBalanceResponse>
 {
     private readonly ILogger<GetAccountBalanceRequestHandler> _logger;
-    
+
     private readonly IBankAccountService _bankAccountService;
 
     public GetAccountBalanceRequestHandler(ILogger<GetAccountBalanceRequestHandler> logger,

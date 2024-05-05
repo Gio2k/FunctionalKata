@@ -1,3 +1,4 @@
+using BankApi.CQS;
 using BankApi.Models;
 
 using MediatR;
@@ -11,7 +12,6 @@ namespace BankApi.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly ILogger<AccountController> _logger;
-    // add mediatr
     private readonly IMediator _mediator;
 
     public AccountController(ILogger<AccountController> logger, IMediator mediator)
@@ -20,6 +20,7 @@ public class AccountController : ControllerBase
         _mediator = mediator;
     }
 
+    // get account balance
     [HttpGet(Name = "balance")]
     public async Task<IActionResult> Get([FromQuery] string accountNumber)
     {
@@ -27,15 +28,13 @@ public class AccountController : ControllerBase
         {
             return BadRequest("Account is not a number");
         }
-        var response = await _mediator.Send(new GetAccountBalanceRequest
-        {
-            AccountNumber = accountNumber
-        });
+
+        var response = await _mediator.Send(new GetAccountBalanceRequest { AccountNumber = accountNumber });
 
         return Ok(response);
     }
-    
-    // Add a post controller to debit an account
+
+    // debit an account
     [HttpPost("debit")]
     public async Task<IActionResult> Debit([FromBody] AccountTransferDto transferDto)
     {
@@ -43,6 +42,7 @@ public class AccountController : ControllerBase
         {
             return BadRequest("Account is not a number");
         }
+
         if (transferDto.Amount <= 0)
         {
             return BadRequest("Amount must be greater than 0");
@@ -50,14 +50,13 @@ public class AccountController : ControllerBase
 
         var result = await _mediator.Send(new DebitAccountRequest
         {
-            AccountNumber = transferDto.AccountNumber,
-            Amount = transferDto.Amount
+            AccountNumber = transferDto.AccountNumber, Amount = transferDto.Amount
         });
-        
+
         return Ok();
     }
-    
-    // add a post controller to credit an account
+
+    // credit an account
     [HttpPost("credit")]
     public async Task<IActionResult> Credit([FromBody] AccountTransferDto transferDto)
     {
@@ -65,18 +64,17 @@ public class AccountController : ControllerBase
         {
             return BadRequest("Account is not a number");
         }
+
         if (transferDto.Amount <= 0)
         {
             return BadRequest("Amount must be greater than 0");
         }
-        // send mediator request to credit account
+
         var result = await _mediator.Send(new CreditAccountRequest
         {
-            AccountNumber = transferDto.AccountNumber,
-            Amount = transferDto.Amount
+            AccountNumber = transferDto.AccountNumber, Amount = transferDto.Amount
         });
+
         return Ok();
     }
 }
-
-// Add a mediator handler for GetAccountBalanceRequest

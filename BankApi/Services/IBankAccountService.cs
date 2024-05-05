@@ -1,4 +1,4 @@
-﻿namespace BankApi.Interfaces;
+﻿namespace BankApi.Services;
 
 public interface IBankAccountService
 {
@@ -7,5 +7,4 @@ public interface IBankAccountService
     void DebitAccount(string accountNumber, decimal amount);
     
     void CreditAccount(string accountNumber, decimal amount);
-    
 }

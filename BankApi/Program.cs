@@ -1,5 +1,5 @@
-using BankApi.Interfaces;
-using BankApi.Models;
+using BankApi.CQS;
+using BankApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,7 @@ builder.Services.AddMediatR(
 
 builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
