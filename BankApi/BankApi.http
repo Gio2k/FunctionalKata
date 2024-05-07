@@ -13,3 +13,23 @@ GET {{BankApi_HostAddress}}/Account?AccountNumber=6543
 Accept: application/json
 
 ###
+
+POST {{BankApi_HostAddress}}/Account/debit
+Content-Type: application/json
+Accept: application/json
+
+{
+  "AccountNumber": "123456",
+  "Amount": 20
+}
+
+###
+
+POST {{BankApi_HostAddress}}/Account/credit
+Content-Type: application/json
+Accept: application/json
+
+{
+  "AccountNumber": "123456",
+  "Amount": 50
+}

@@ -16,7 +16,7 @@ builder.Services.AddMediatR(
         cfg.RegisterServicesFromAssemblyContaining<GetAccountBalanceRequest>();
     });
 
-builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+builder.Services.AddSingleton<IBankAccountRepository, BankAccountRepository>();
 builder.Services.AddScoped<IBankAccountService, BankAccountService>();
 
 var app = builder.Build();
