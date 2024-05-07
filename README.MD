@@ -40,3 +40,10 @@ sequenceDiagram
     Mediator-->Controller: AccountBalanceResponse
     Controller-->User: 200 OK AccountBalanceResponse
 ```
+
+The goal of the project is to highlight problementic OOP constructs and offer solutions based on FP concepts:
+
+- Use Options instead of returning null
+- Use Either / Result to convey errors
+- Avoid void methods
+- Show method composition as a way to showcase the FP declarative programming style instead of the imperative OOP style  
