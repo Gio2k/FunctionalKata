@@ -6,5 +6,5 @@ public interface IBankAccountRepository
 {
     BankAccount Find(string accountNumber);
     
-    void SaveBalance(BankAccount balance);
+    void Save(BankAccount balance);
 }

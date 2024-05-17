@@ -16,14 +16,33 @@ public class BankAccountRepository : IBankAccountRepository
 
     public BankAccount Find(string accountNumber)
     {
-        // Pretend we don't have any control over whether this call returns an exception or not
-        return _accountBalances.FirstOrDefault(b => b.Key == accountNumber).Value;
+        return FindAccountExternal(accountNumber);
     }
 
-    public void SaveBalance(BankAccount balance)
+    public void Save(BankAccount newAccountState)
     {
-        if (!_accountBalances.ContainsKey(balance.AccountNumber)) 
+        try
+        {
+            FindAccountExternal(newAccountState.AccountNumber);
+        }
+        catch (Exception)
+        {
             throw new Exception("Account does not exist");
+        }
+          
+        UpsertAccountExternal(newAccountState);
+    }
+
+    // Pretend the following methods belong in an external library, over which we don't have any control
+    private BankAccount FindAccountExternal(string accountNumber)
+    {
+        
+        return _accountBalances.FirstOrDefault(b => b.Key == accountNumber).Value ??
+               throw new Exception("Some external library exception");
+    }
+
+    private void UpsertAccountExternal(BankAccount balance)
+    {
         _accountBalances[balance.AccountNumber] = balance;
     }
 }
