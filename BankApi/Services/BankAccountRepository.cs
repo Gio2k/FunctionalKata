@@ -16,6 +16,7 @@ public class BankAccountRepository : IBankAccountRepository
 
     public BankAccount Find(string accountNumber)
     {
+        // Pretend we don't have any control over whether this call returns an exception or not
         return _accountBalances.FirstOrDefault(b => b.Key == accountNumber).Value;
     }
 
