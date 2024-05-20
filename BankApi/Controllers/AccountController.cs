@@ -22,6 +22,8 @@ public class AccountController : ControllerBase
 
     // get account balance
     [HttpGet(Name = "balance")]
+    [ProducesResponseType(typeof(AccountBalanceResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get([FromQuery] string accountNumber)
     {
         if (!accountNumber.All(char.IsDigit))
@@ -36,6 +38,8 @@ public class AccountController : ControllerBase
 
     // debit an account
     [HttpPost("debit")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Debit([FromBody] AccountTransferDto transferDto)
     {
         if (!transferDto.AccountNumber.All(char.IsDigit))
@@ -58,6 +62,8 @@ public class AccountController : ControllerBase
 
     // credit an account
     [HttpPost("credit")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Credit([FromBody] AccountTransferDto transferDto)
     {
         if (!transferDto.AccountNumber.All(char.IsDigit))
