@@ -36,13 +36,15 @@ public class BankAccountRepository : IBankAccountRepository
     // Pretend the following methods belong in an external library, over which we don't have any control
     private BankAccount FindAccountExternal(string accountNumber)
     {
-        
-        return _accountBalances.FirstOrDefault(b => b.Key == accountNumber).Value ??
-               throw new Exception("Some external library exception");
+        // This method returns null if the account does not exist
+        return _accountBalances.FirstOrDefault(b => b.Key == accountNumber).Value;
     }
 
     private void UpsertAccountExternal(BankAccount balance)
     {
+        // this method throws an exception if the account does not exist
+        if (!_accountBalances.ContainsKey(balance.AccountNumber))
+            throw new Exception("Some external library exception");
         _accountBalances[balance.AccountNumber] = balance;
     }
 }
