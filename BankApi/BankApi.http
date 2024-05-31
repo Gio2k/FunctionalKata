@@ -1,4 +1,4 @@
-@BankApi_HostAddress = http://localhost:5263
+@BankApi_HostAddress = https://localhost:7033
 
 GET {{BankApi_HostAddress}}/Account?AccountNumber=123456
 Accept: application/json
