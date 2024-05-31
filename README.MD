@@ -29,16 +29,16 @@ sequenceDiagram
     User->>Controller: GET /Account/accountNumber=123
     Controller --> Controller: Check valid input
     alt invalid input
-        Controller->>User: BadRequest
+        Controller->>User: 400 BadRequest "Error message"
     else valid input
-            Controller-->>Mediator: GetAccountBalanceRequest(accountNumber:123)
+            Controller-->>MediatorHandler: GetAccountBalanceRequest(accountNumber:123)
     end 
-    Mediator-->BankService: GetAccountBalance(accountNumber: 123)
-    BankService-->BankRepository: Find(accountNumber: 123)
-    BankRepository-->BankService: Account
-    BankService-->Mediator: Balance
-    Mediator-->Controller: AccountBalanceResponse
-    Controller-->User: 200 OK AccountBalanceResponse
+    MediatorHandler-->>BankService: GetAccountBalance(accountNumber: 123)
+    BankService-->>BankRepository: Find(accountNumber: 123)
+    BankRepository-->>BankService: Account
+    BankService-->>MediatorHandler: Balance
+    MediatorHandler-->>Controller: AccountBalanceResponse
+    Controller->>User: 200 OK AccountBalanceResponse
 ```
 
 The goal of the project is to highlight problematic OOP constructs and offer solutions based on FP concepts:
