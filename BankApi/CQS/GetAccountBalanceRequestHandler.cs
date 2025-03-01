@@ -1,10 +1,12 @@
 ﻿using BankApi.Services;
 
+using LanguageExt;
+
 using MediatR;
 
 namespace BankApi.CQS;
 
-public class GetAccountBalanceRequestHandler : IRequestHandler<GetAccountBalanceRequest, AccountBalanceResponse>
+public class GetAccountBalanceRequestHandler : IRequestHandler<GetAccountBalanceRequest, Either<string, AccountBalanceResponse>>
 {
     private readonly ILogger<GetAccountBalanceRequestHandler> _logger;
 
@@ -18,10 +20,8 @@ public class GetAccountBalanceRequestHandler : IRequestHandler<GetAccountBalance
     }
 
 
-    public Task<AccountBalanceResponse> Handle(GetAccountBalanceRequest request, CancellationToken cancellationToken)
-    {
-        // Get the account balance
-        var balance = _bankAccountService.GetAccountBalance(request.AccountNumber);
-        return Task.FromResult(new AccountBalanceResponse(request.AccountNumber, balance));
-    }
+    public Task<Either<string, AccountBalanceResponse>> Handle(GetAccountBalanceRequest request, CancellationToken cancellationToken) =>
+        Task.FromResult(_bankAccountService.GetAccountBalance(request.AccountNumber)
+            .Map(b => new AccountBalanceResponse(request.AccountNumber, b))
+            .ToEither("Account not found"));
 }

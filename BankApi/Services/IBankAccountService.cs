@@ -1,8 +1,10 @@
-﻿namespace BankApi.Services;
+﻿using LanguageExt;
+
+namespace BankApi.Services;
 
 public interface IBankAccountService
 {
-    decimal GetAccountBalance(string accountNumber);
+    Option<decimal> GetAccountBalance(string accountNumber);
     
     void DebitAccount(string accountNumber, decimal amount);
     

@@ -1,5 +1,9 @@
 ﻿using BankApi.Models;
 
+using LanguageExt;
+
+using static LanguageExt.Prelude;
+
 namespace BankApi.Services;
 
 public class BankAccountRepository : IBankAccountRepository
@@ -14,10 +18,7 @@ public class BankAccountRepository : IBankAccountRepository
         { "111111", new("111111", "Jane Doe", 300.0m, -100.0m)}
     };
 
-    public BankAccount Find(string accountNumber)
-    {
-        return FindAccountExternal(accountNumber);
-    }
+    public Option<BankAccount> Find(string accountNumber) => Optional(FindAccountExternal(accountNumber));
 
     public void Save(BankAccount newAccountState)
     {

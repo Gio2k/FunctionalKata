@@ -1,6 +1,8 @@
 using BankApi.CQS;
 using BankApi.Models;
 
+using LanguageExt;
+
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
@@ -24,17 +26,18 @@ public class AccountController : ControllerBase
     [HttpGet(Name = "balance")]
     [ProducesResponseType(typeof(AccountBalanceResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Get([FromQuery] string accountNumber)
-    {
-        if (!accountNumber.All(char.IsDigit))
-        {
-            return BadRequest("Account is not a number");
-        }
+    public async Task<IActionResult> Get([FromQuery] string accountNumber) =>
+        await ValidateAccount(accountNumber).ToAsync()
+            .Bind(GetAccountBalance)
+            .Match<IActionResult>(Ok, BadRequest);
 
-        var response = await _mediator.Send(new GetAccountBalanceRequest { AccountNumber = accountNumber });
+    private EitherAsync<string, AccountBalanceResponse> GetAccountBalance(GetAccountBalanceRequest res) => 
+        _mediator.Send(res).ToAsync();
 
-        return Ok(response);
-    }
+    private static Either<string, GetAccountBalanceRequest> ValidateAccount(string accountNumber) =>
+        accountNumber.All(char.IsDigit)
+            ? new GetAccountBalanceRequest { AccountNumber = accountNumber }
+            : "Account is not a number";
 
     // debit an account
     [HttpPost("debit")]

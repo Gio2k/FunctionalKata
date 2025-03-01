@@ -1,10 +1,12 @@
 ﻿using BankApi.Models;
 
+using LanguageExt;
+
 namespace BankApi.Services;
 
 public interface IBankAccountRepository
 {
-    BankAccount Find(string accountNumber);
+    Option<BankAccount> Find(string accountNumber);
     
     void Save(BankAccount balance);
 }
