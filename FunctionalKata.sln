@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankApi", "BankApi\BankApi.csproj", "{49490EA5-F5DA-4D0D-BA9F-A3C39488E4AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankApi.Tests", "BankApi.Tests\BankApi.Tests.csproj", "{12C5F628-F793-4635-BEBB-E902C1EF058B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{49490EA5-F5DA-4D0D-BA9F-A3C39488E4AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49490EA5-F5DA-4D0D-BA9F-A3C39488E4AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49490EA5-F5DA-4D0D-BA9F-A3C39488E4AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12C5F628-F793-4635-BEBB-E902C1EF058B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12C5F628-F793-4635-BEBB-E902C1EF058B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12C5F628-F793-4635-BEBB-E902C1EF058B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12C5F628-F793-4635-BEBB-E902C1EF058B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
